@@ -3,7 +3,7 @@ import { binarySearch } from './util'
 import { Parts } from './parts'
 import { Tokens } from './tokens'
 
-const Begin = /[\/'"`]/g
+const Begin = /[/'"`]/g
 
 const Type = Tokens.Type
 
@@ -192,7 +192,7 @@ export class Segments {
             !this.cache.state.length ||
             (this.cache.state.length &&
               state.offset! >
-                this.cache.state[this.cache.state.length - 1].offset)
+              this.cache.state[this.cache.state.length - 1].offset)
           ) {
             this.cache.state.push(state as Segment)
           }

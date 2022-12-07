@@ -1,4 +1,4 @@
-import { Buffer } from '../'
+import { Buffer } from '../src'
 
 const fixture = `
 1/*

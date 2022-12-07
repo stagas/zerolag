@@ -1,0 +1,13 @@
+
+exports[`Area join 1`] = `
+Area {
+  "begin": Point {
+    "x": 5,
+    "y": 6,
+  },
+  "end": Point {
+    "x": 2,
+    "y": 20,
+  },
+}
+`;

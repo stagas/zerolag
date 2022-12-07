@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Point, AreaLike } from './point'
+import { AreaLike, Point } from './point'
 
 export class Area {
   static offset(b: Area, a: Area) {
@@ -37,6 +37,13 @@ export class Area {
         ? a.end.x - b.x
         : 0
       : a.begin.y - b.y
+  }
+
+  static join(areas: Area[]) {
+    const sorted = areas.map(a => a.get()).flatMap(a => [a.begin, a.end]).sort(Point.sort)
+    const begin = sorted[0]
+    const end = sorted.at(-1)!
+    return new Area({ begin, end })
   }
 
   begin: Point
@@ -128,27 +135,27 @@ export class Area {
   }
 
   inside(a: Area) {
-    return this['>'](a) && this['<'](a)
+    return (this as any)['>'](a) && (this as any)['<'](a)
   }
 
   outside(a: Area) {
-    return this['<'](a) || this['>'](a)
+    return (this as any)['<'](a) || (this as any)['>'](a)
   }
 
   insideEqual(a: Area) {
-    return this['>='](a) && this['<='](a)
+    return (this as any)['>='](a) && (this as any)['<='](a)
   }
 
   outsideEqual(a: Area) {
-    return this['<='](a) || this['>='](a)
+    return (this as any)['<='](a) || (this as any)['>='](a)
   }
 
   equal(a: Area) {
     return (
-      this.begin.x === a.begin.x &&
-      this.begin.y === a.begin.y &&
-      this.end.x === a.end.x &&
-      this.end.y === a.end.y
+      this.begin.x === a.begin.x
+      && this.begin.y === a.begin.y
+      && this.end.x === a.end.x
+      && this.end.y === a.end.y
     )
   }
 
@@ -161,7 +168,7 @@ export class Area {
   }
 
   linesEqual(a: Area) {
-    return this['|='](a) && this['=|'](a)
+    return (this as any)['|='](a) && (this as any)['=|'](a)
   }
 
   sameLine(a: Area) {
@@ -198,36 +205,21 @@ export class Area {
     const area = this.get()
     return '' + area.begin + '|' + area.end
   }
-
-  '>': any
-  '>=': any
-  '<': any
-  '<=': any
-  '><': any
-  '<>': any
-  '>=<': any
-  '<=>': any
-  '===': any
-  '|=': any
-  '=|': any
-  '|=|': any
-  '=|=': any
-  '-x-': any
-  '+x+': any
 }
 
-Area.prototype['>'] = Area.prototype.greaterThan
-Area.prototype['>='] = Area.prototype.greaterThanOrEqual
-Area.prototype['<'] = Area.prototype.lessThan
-Area.prototype['<='] = Area.prototype.lessThanOrEqual
-Area.prototype['><'] = Area.prototype.inside
-Area.prototype['<>'] = Area.prototype.outside
-Area.prototype['>=<'] = Area.prototype.insideEqual
-Area.prototype['<=>'] = Area.prototype.outsideEqual
-Area.prototype['==='] = Area.prototype.equal
-Area.prototype['|='] = Area.prototype.beginLineEqual
-Area.prototype['=|'] = Area.prototype.endLineEqual
-Area.prototype['|=|'] = Area.prototype.linesEqual
-Area.prototype['=|='] = Area.prototype.sameLine
-Area.prototype['-x-'] = Area.prototype.shortenByX
-Area.prototype['+x+'] = Area.prototype.widenByX
+const proto = Area.prototype as any
+proto['>'] = proto.greaterThan
+proto['>='] = proto.greaterThanOrEqual
+proto['<'] = proto.lessThan
+proto['<='] = proto.lessThanOrEqual
+proto['><'] = proto.inside
+proto['<>'] = proto.outside
+proto['>=<'] = proto.insideEqual
+proto['<=>'] = proto.outsideEqual
+proto['==='] = proto.equal
+proto['|='] = proto.beginLineEqual
+proto['=|'] = proto.endLineEqual
+proto['|=|'] = proto.linesEqual
+proto['=|='] = proto.sameLine
+proto['-x-'] = proto.shortenByX
+proto['+x+'] = proto.widenByX

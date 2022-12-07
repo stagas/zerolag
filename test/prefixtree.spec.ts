@@ -1,4 +1,4 @@
-import { PrefixTreeNode } from '../prefixtree'
+import { PrefixTreeNode } from '../src/prefixtree'
 
 describe('PrefixTree', () => {
   const words = ['foo', 'fo', 'ba', 'bar']

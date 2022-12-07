@@ -1,4 +1,4 @@
-import { Parts } from '../parts'
+import { Parts } from '../src/parts'
 
 let p
 

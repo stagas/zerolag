@@ -9,7 +9,21 @@ import { Segments } from './segments'
 import { Indexer } from './indexer'
 import { Tokens } from './tokens'
 import { Parts } from './parts'
-// import { Syntax } from './syntax'
+import { Syntax } from './syntax'
+
+export {
+  Area,
+  Event,
+  Indexer,
+  Parts,
+  Point,
+  PrefixTreeNode,
+  Regexp,
+  Segments,
+  SkipString,
+  Syntax,
+  Tokens,
+}
 
 const EOL = /\r\n|\r|\n/g
 const NEWLINE = /\n/g
@@ -26,7 +40,7 @@ interface BufferPoint extends Point {
   point: BufferPoint
 }
 
-class Line {
+export class Line {
   offsetRange: Range = [-1, -1]
   offset = 0
   length = 0
@@ -39,7 +53,7 @@ function normalizeEOL(s: string) {
 
 type Range = [number, number]
 
-type LogEntry = ['insert' | 'remove', Range, string]
+export type LogEntry = ['insert' | 'remove', Range, string]
 
 export class Buffer extends Event {
   log: LogEntry[]
@@ -52,6 +66,9 @@ export class Buffer extends Event {
   text!: SkipString
   tokens!: Tokens<Parts>
   prefix!: PrefixTreeNode
+
+  declare insert: Buffer['insertTextAtPoint']
+  declare remove: Buffer['removeOffsetRange']
 
   constructor() {
     super()
@@ -94,7 +111,7 @@ export class Buffer extends Event {
 
     this.emit('set')
   }
-  insertTextAtPoint(p: BufferPoint, text: string, noLog: boolean) {
+  insertTextAtPoint(p: Point, text: string, noLog?: boolean) {
     if (!noLog) this.emit('before update')
 
     text = normalizeEOL(text)
@@ -160,9 +177,9 @@ export class Buffer extends Event {
       }
     }
   }
-  removeArea(area: Area) {
+  removeArea(area: Area, noLog?: boolean) {
     const offsets = this.getAreaOffsetRange(area)
-    return this.removeOffsetRange(offsets)
+    return this.removeOffsetRange(offsets, noLog)
   }
   removeCharAtPoint(p: Point) {
     const point = this.getPoint(p)
@@ -356,8 +373,8 @@ export class Buffer extends Event {
       text = text.slice(-1) + text.slice(0, -1)
     }
 
-    this.remove(offsets)
-    this.insert({ x, y }, text)
+    ; (this as any).remove(offsets)
+      ; (this as any).insert({ x, y }, text)
 
     return true
   }
@@ -416,15 +433,8 @@ export class Buffer extends Event {
   toString() {
     return this.text.toString()
   }
-
-  insert: any
-  remove: any
 }
 
-// Buffer.prototype.__proto__ = Event.prototype;
-
-Buffer.prototype.insert = Buffer.prototype.insertTextAtPoint
-// ;
-
-Buffer.prototype.remove = Buffer.prototype.removeOffsetRange
-// ;
+const proto = Buffer.prototype as any
+proto.insert = proto.insertTextAtPoint
+proto.remove = proto.removeOffsetRange

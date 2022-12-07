@@ -1,4 +1,4 @@
-import { SkipString } from '../skipstring'
+import { SkipString } from '../src/skipstring'
 
 describe('SkipString', () => {
   it('insert', () => {

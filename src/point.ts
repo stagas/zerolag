@@ -12,6 +12,20 @@ export interface AreaLike {
 export class Point {
   x = 0
   y = 0
+
+  declare ['/']: Point['div']
+  declare ['_/']: Point['floorDiv']
+  declare ['o/']: Point['roundDiv']
+  declare ['^/']: Point['ceilDiv']
+  declare plus: Point['add']
+  declare minus: Point['sub']
+  declare ['+']: Point['plus']
+  declare ['-']: Point['minus']
+  declare ['*']: Point['mul']
+  declare ['^*']: Point['ceilMul']
+  declare ['o*']: Point['roundMul']
+  declare ['_*']: Point['floorMul']
+
   constructor(p?: PointLike) {
     if (p) {
       this.x = p.x!
@@ -161,37 +175,17 @@ export class Point {
       top: p.y,
     }
   }
-
-  '/': any
-  '_/': any
-  'o/': any
-  '^/': any
-  '+': any
-  '-': any
-  plus: any
-  minus: any
-  '*': any
-  '^*': any
-  'o*': any
-  '_*': any
 }
 
-Point.prototype['/'] = Point.prototype.div
+const proto = Point.prototype as any
 
-Point.prototype['_/'] = Point.prototype.floorDiv
-
-Point.prototype['o/'] = Point.prototype.roundDiv
-
-Point.prototype['^/'] = Point.prototype.ceilDiv
-
-Point.prototype['+'] = Point.prototype.plus = Point.prototype.add
-
-Point.prototype['-'] = Point.prototype.minus = Point.prototype.sub
-
-Point.prototype['*'] = Point.prototype.mul
-
-Point.prototype['^*'] = Point.prototype.ceilMul
-
-Point.prototype['o*'] = Point.prototype.roundMul
-
-Point.prototype['_*'] = Point.prototype.floorMul
+proto['/'] = proto.div
+proto['_/'] = proto.floorDiv
+proto['o/'] = proto.roundDiv
+proto['^/'] = proto.ceilDiv
+proto['+'] = proto.plus = proto.add
+proto['-'] = proto.minus = proto.sub
+proto['*'] = proto.mul
+proto['^*'] = proto.ceilMul
+proto['o*'] = proto.roundMul
+proto['_*'] = proto.floorMul

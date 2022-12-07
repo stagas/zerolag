@@ -13,17 +13,22 @@ const syntax = Regexp.join(
   [
     'newline',
     'comment',
-    ['number', R(['special', 'number'], '')],
+    'number',
+    'buffer',
+    'special',
     'operator',
     'symbol',
-    // 'params',
+    'brackets',
+    'params',
     'attribute',
     // 'keyword',
-    ['variable', R(['variable', 'call'], '')],
+    'definition',
+    'call',
     'keyword',
+    'variable',
+    // ['variable', R(['variable', 'call'], '')],
     // ['keyword', R(['operator'])],
     // 'string',
-    'definition',
   ],
   'gm'
 )
@@ -110,7 +115,7 @@ export class Syntax {
     // code = this.restoreBlocks(code);
     // code = code.replace(Indent.regexp, Indent.replacer);
     pieces.pop()
-    while (pieces.pop()![0] !== 'newline') {} // TODO: whoa
+    while (pieces.pop()![0] !== 'newline') { } // TODO: whoa
     return pieces
   }
   createIndents(code: string) {
