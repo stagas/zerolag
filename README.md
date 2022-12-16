@@ -1,7 +1,7 @@
 
 
 <h1>
-zerolag <a href="https://npmjs.org/package/zerolag"><img src="https://img.shields.io/badge/npm-v1.0.0-F00.svg?colorA=000"/></a> <a href="src"><img src="https://img.shields.io/badge/loc-1,931-FFF.svg?colorA=000"/></a> <a href="https://cdn.jsdelivr.net/npm/zerolag@1.0.0/dist/zerolag.min.js"><img src="https://img.shields.io/badge/brotli-7.8K-333.svg?colorA=000"/></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-F0B.svg?colorA=000"/></a>
+zerolag <a href="https://npmjs.org/package/zerolag"><img src="https://img.shields.io/badge/npm-v1.1.0-F00.svg?colorA=000"/></a> <a href="src"><img src="https://img.shields.io/badge/loc-1,931-FFF.svg?colorA=000"/></a> <a href="https://cdn.jsdelivr.net/npm/zerolag@1.1.0/dist/zerolag.min.js"><img src="https://img.shields.io/badge/brotli-7.7K-333.svg?colorA=000"/></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-F0B.svg?colorA=000"/></a>
 </h1>
 
 <p></p>
