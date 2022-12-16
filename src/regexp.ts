@@ -35,21 +35,22 @@ export class Regexp {
 
   static types: Record<string, RegExp> = {
     tokens: /.+?\b|.\B|\b.+?/,
-    definition: /[a-zA-Z_]+?(?=\(.*\)=)/,
+    definition: /^[a-zA-Z_]+?(?=\([^]*\)=)/,
     buffer: /#/,
     call: /[a-zA-Z_]+?(?=\()/,
     words: /[a-zA-Z0-9]{1,}/,
     parts: /[./\\()"'\-:,.;<>~!@#$%^&*|+=[\]{}`~? ]+/,
 
-    'single comment': /\\.*?$/,
+    'single comment': /\\.*?$|\/\/.*?$/,
     // 'single comment': /\/\/.*?$/,
     'double comment': /\/\*[^]*?\*\//,
     'single quote string': /('(?:(?:\\\n|\\'|[^'\n]))*?')/,
     'double quote string': /("(?:(?:\\\n|\\"|[^"\n]))*?")/,
     'template string': /(`(?:(?:\\`|[^`]))*?`)/,
 
+    number: /-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee][+-]?\d+)?[fkKbBs]?|NaN|-?Infinity)\b/,
     operator:
-      /!|::|:|>=?|<=?|={1,3}|(?:&){1,2}|\|?\||\?|\*|\/|~|\^|%|\+{1,2}|-{1,2}/, // \.(?!\d)|
+      /!|\.\.|\.|::|:|>=?|<=?|={1,3}|(?:&){1,2}|\|?\||\?|\*|\/|~|\^|%|\+{1,2}|-{1,2}/, // \.(?!\d)|
     attribute:
       / ((?!\d|[. ]*?(if|else|do|for|case|try|catch|while|with|switch))[a-zA-Z0-9_ $]+)(?=\(.*\).*{)/,
     keyword:
@@ -59,7 +60,6 @@ export class Regexp {
       /\b(Object|Function|Boolean|Error|EvalError|InternalError|RangeError|ReferenceError|StopIteration|SyntaxError|TypeError|URIError|Number|Math|Date|String|RegExp|Array|Float32Array|Float64Array|Int16Array|Int32Array|Int8Array|Uint16Array|Uint32Array|Uint8Array|Uint8ClampedArray|ArrayBuffer|DataView|JSON|Intl|arguments|console|window|document|Symbol|Set|Map|WeakSet|WeakMap|Proxy|Reflect|Promise)\b/,
     special: /\b(true|false|null|undefined)\b/,
     params: /function[ (]{1}[^]*?\{/,
-    number: /-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee][+-]?\d+)?|NaN|-?Infinity)\b/,
     brackets: /[{}()[\]]/,
     symbol: /[;,.]/,
 
